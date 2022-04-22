@@ -42,7 +42,7 @@ public:
 	virtual void add(
 		const falco_rule& rule,
 		std::shared_ptr<libsinsp::filter::ast::expr> condition) = 0;
-	
+
 	/*!
 		\brief Erases the internal state. All rules are disabled in each
 		ruleset, and all the rules defined with add() are removed.
@@ -50,22 +50,13 @@ public:
 	virtual void clear() = 0;
 
 	/*!
-		\brief Returns the numeric id of a ruleset given its name.
-		If a ruleset has been used before, its previously assigned id is
-		returned. Otherwise, a new ruleset is created with the given name
-		and a new id is assigned to it.
-	*/
-	virtual uint16_t ruleset_id(const std::string &name) = 0;
-
-	/*!
-		\brief Optimizes the structure of a given ruleset.
+		\brief Optimizes the structure of all rules loaded into the rulset.
 		This can be used by the different implementations to optimize the
 		underlying data structures for better runtime performance and memory
 		usage. This is meant to be called after all rules have been added with
 		add() and enabled on the given ruleset with enable()/enable_tags().
-		\param ruleset The id of the ruleset to be used
 	*/
-	virtual void optimize(uint16_t ruleset = 0) = 0;
+	virtual void optimize() = 0;
 
 	/*!
 		\brief Processes an event and tries to find a match in a given ruleset.
@@ -79,7 +70,7 @@ public:
 		gen_event *evt,
 		falco_rule& match,
 		uint16_t ruleset = 0) = 0;
-	
+
 	/*!
 		\brief Returns the number of rules enabled in a given ruleset
 		\param ruleset The id of the ruleset to be used
