@@ -665,7 +665,7 @@ void rule_loader::compile_rule_infos(
 				apply_output_substitutions(cfg, rule.output);
 			}
 
-			THROW(!is_format_valid(cfg.engine, r.source, rule.output, err),
+			THROW(!is_format_valid(*cfg.sources.at(r.source), rule.output, err),
 				"Invalid output format '" + rule.output + "': '" + err + "'");
 
 			// construct rule definition and compile it to a filter
@@ -676,10 +676,22 @@ void rule_loader::compile_rule_infos(
 			rule.tags = r.tags;
 			try
 			{
+				bool match_exact = true;
 				auto rule_id = out.insert(rule, rule.name);
 				out.at(rule_id)->id = rule_id;
 				source->ruleset->add(*out.at(rule_id), ast);
-				source->ruleset->enable(rule.name, false, r.enabled);
+
+				// By default rules are enabled or
+				// disabled based on the enabled
+				// property for the default ruleset.
+				if(r.enabled)
+				{
+					source->ruleset->enable(rule.name, match_exact, source->default_ruleset_id);
+				}
+				else
+				{
+					source->ruleset->disable(rule.name, match_exact, source->default_ruleset_id);
+				}
 			}
 			catch (falco_exception& e)
 			{
@@ -722,10 +734,6 @@ void rule_loader::compile_rule_infos(
 			{
 				evttypes = { ppm_event_type::PPME_PLUGINEVENT_E };
 			}
-
-			// add rule and its filter in the engine
-			cfg.engine->add_filter(filter, rule.name, rule.source, evttypes, rule.tags);
-			cfg.engine->enable_rule(rule.name, r.enabled);
 		}
 		catch (exception& e)
 		{

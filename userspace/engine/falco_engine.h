@@ -192,7 +192,7 @@ public:
 	std::size_t add_source(const std::string &source,
 			       std::shared_ptr<gen_event_filter_factory> filter_factory,
 			       std::shared_ptr<gen_event_formatter_factory> formatter_factory);
-	
+
 	//
 	// Equivalent to above, but allows specifying a ruleset factory
 	// for the newly added source.
@@ -245,6 +245,8 @@ private:
 	indexed_vector<falco_rule> m_rules;
 	stats_manager m_rule_stats_manager;
 
+	uint16_t m_next_ruleset_id;
+	std::map<string, uint16_t> m_known_rulesets;
 	falco_common::priority_type m_min_priority;
 
 	//
