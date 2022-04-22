@@ -47,6 +47,8 @@ falco_engine::falco_engine(bool seed_rng)
 	{
 		srandom((unsigned) getpid());
 	}
+
+	m_default_ruleset_id = find_ruleset_id(s_default_ruleset);
 }
 
 falco_engine::~falco_engine()
@@ -364,9 +366,7 @@ unique_ptr<falco_engine::rule_result> falco_engine::process_event(std::size_t so
 
 unique_ptr<falco_engine::rule_result> falco_engine::process_event(std::size_t source_idx, gen_event *ev)
 {
-	uint16_t ruleset_id = find_ruleset_id(s_default_ruleset);
-
-	return process_event(source_idx, ev, ruleset_id);
+	return process_event(source_idx, ev, m_default_ruleset_id);
 }
 
 std::size_t falco_engine::add_source(const std::string &source,

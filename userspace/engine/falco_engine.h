@@ -273,6 +273,7 @@ private:
 	double m_sampling_multiplier;
 
 	static const std::string s_default_ruleset;
+	uint32_t m_default_ruleset_id;
 
 	std::string m_extra;
 	bool m_replace_container_info;
