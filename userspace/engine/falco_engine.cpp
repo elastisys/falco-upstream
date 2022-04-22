@@ -298,8 +298,7 @@ void falco_engine::set_min_priority(falco_common::priority_type priority)
 	m_min_priority = priority;
 }
 
-uint16_t falco_engine::find_ruleset_id(
-	const std::string &ruleset, const std::string &source)
+uint16_t falco_engine::find_ruleset_id(const std::string &ruleset)
 {
 	auto it = m_known_rulesets.lower_bound(ruleset);
 

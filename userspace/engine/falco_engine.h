@@ -99,9 +99,7 @@ public:
 	// to enable_rule/enable_rule_by_tag(), you should look up the
 	// ruleset id and pass it to process_event().
 	//
-	uint16_t find_ruleset_id(
-		const std::string &ruleset,
-		const std::string &source = falco_common::syscall_source);
+	uint16_t find_ruleset_id(const std::string &ruleset);
 
 	//
 	// Return the number of falco rules enabled for the provided ruleset
