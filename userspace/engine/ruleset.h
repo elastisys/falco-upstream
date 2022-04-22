@@ -30,6 +30,8 @@ limitations under the License.
 class filter_ruleset
 {
 public:
+	virtual ~filter_ruleset() = default;
+
 	/*!
 		\brief Adds a rule and its filtering condition inside the manager.
 		An exception is thrown is case of error. This method only adds the rule
