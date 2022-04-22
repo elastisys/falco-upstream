@@ -69,13 +69,13 @@ public:
 	virtual bool run(
 		gen_event *evt,
 		falco_rule& match,
-		uint16_t ruleset = 0) = 0;
+		uint16_t ruleset_id) = 0;
 
 	/*!
 		\brief Returns the number of rules enabled in a given ruleset
 		\param ruleset The id of the ruleset to be used
 	*/
-	virtual uint64_t enabled_count(uint16_t ruleset = 0) = 0;
+	virtual uint64_t enabled_count(uint16_t ruleset_id) = 0;
 
 	/*!
 		\brief Returns the union of the evttypes of all the rules enabled
@@ -101,7 +101,7 @@ public:
 		const std::string &substring,
 		bool match_exact,
 		bool enabled,
-		uint16_t ruleset = 0) = 0;
+		uint16_t ruleset_id) = 0;
 
 	/*!
 		\brief Find those rules that have a tag in the set of tags and
@@ -118,7 +118,7 @@ public:
 	virtual void enable_tags(
 		const std::set<std::string> &tags,
 		bool enabled,
-		uint16_t ruleset = 0) = 0;
+		uint16_t ruleset_id) = 0;
 };
 
 /*!
