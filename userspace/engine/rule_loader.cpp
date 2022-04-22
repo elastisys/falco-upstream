@@ -727,8 +727,8 @@ void rule_loader::compile_rule_infos(
 			set<uint16_t> evttypes = { ppm_event_type::PPME_PLUGINEVENT_E };
 			if(rule.source == falco_common::syscall_source)
 			{
-				filter_evttype_resolver resolver;
-				resolver.evttypes(ast, evttypes);
+				evttypes.clear();
+				filter_evttype_resolver().evttypes(ast, evttypes);
 				if ((evttypes.empty() || evttypes.size() > 100)
 					&& r.warn_evttypes)
 				{
